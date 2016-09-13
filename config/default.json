@@ -1,0 +1,16 @@
+{
+  "repo": {
+    "directory": "./repo/",
+    "movies_file": "_data/movies.yml",
+    "movies_full_file": "_data/movies-full.yml",
+    "config_file": "_config.yml",
+    "config_entry": "movies_count",
+    "url": "git@github.com-ilnic:igorlukanin/igor.lukanin.name.git",
+    "remote": "origin",
+    "branch": "gh-pages",
+    "author": "Igor Lukanin",
+    "email": "mail@igor.lukanin.name",
+    "message": "Movies updated"
+  },
+  "update_interval_minutes": 15
+}
