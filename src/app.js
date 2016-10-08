@@ -33,9 +33,13 @@ var updateViaImdb = movie => {
                 movie.title = info.title;
                 movie.release_year = info.year.from ? info.year.from : info.year;
                 movie.director = info.director;
+
                 movie.writers = info.writers;
+                movie.writers.sort();
+
                 movie.actors = info.actors;
-                movie.poster = info.poster;
+                movie.actors.sort();
+
                 movie.imdb_rating = info.imdb.rating;
 
                 resolve(movie);
