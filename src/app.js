@@ -25,7 +25,10 @@ var config = require('config'),
 
 
 var updateViaImdb = movie => {
-    if (movie.link && movie.link.indexOf('http://www.imdb.com/title/tt') == 0) {
+    if (movie.link !== undefined &&
+        movie.link.indexOf('http://www.imdb.com/title/tt') == 0 &&
+        movie.title === undefined
+    ) {
         return new Promise(resolve => {
             var id = movie.link.replace('http://www.imdb.com/title/', '').replace('/', '');
 
@@ -54,7 +57,12 @@ var updateViaImdb = movie => {
 var update = () => {
     var movies = rmrf(directory)
         .then(() => git.clone(url, directory))
-        .then(() => yaml.read(moviesPath))
+        .then(() => yaml.read(moviesFullPath).reduce((all, movie) => {
+            all[movie.link] = movie;
+            return all;
+        }, {}))
+        .then(fullMovies => yaml.read(moviesPath).map(movie =>
+            fullMovies[movie.link] || movie))
         .then(movies => Promise.all(movies.map(updateViaImdb)))
         .then(movies => {
             const currentYear = new Date().getUTCFullYear();
