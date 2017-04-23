@@ -33,17 +33,22 @@ var updateViaImdb = movie => {
             var id = movie.link.replace('http://www.imdb.com/title/', '').replace('/', '');
 
             imdb.get(id, (err, info) => {
-                movie.title = info.title;
-                movie.release_year = info.year.from ? info.year.from : info.year;
-                movie.director = info.director;
+                if (info === undefined) {
+                    movie.title = movie.link;
+                }
+                else {
+                    movie.title = info.title;
+                    movie.release_year = info.year.from ? info.year.from : info.year;
+                    movie.director = info.director;
 
-                movie.writers = info.writers;
-                movie.writers.sort();
+                    movie.writers = info.writers;
+                    movie.writers.sort();
 
-                movie.actors = info.actors;
-                movie.actors.sort();
+                    movie.actors = info.actors;
+                    movie.actors.sort();
 
-                movie.imdb_rating = info.imdb.rating;
+                    movie.imdb_rating = info.imdb.rating;
+                }
 
                 resolve(movie);
             });
